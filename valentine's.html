@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Valentine 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background-color: #ffebf0;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-top: 40px;
+      overflow: hidden;
+    }
+
+    h1 { color: #e6005c; }
+    h2 { color: #ff4d88; }
+
+    /* Cute GIF */
+    .gif-container img {
+      width: 200px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 20px pink;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Buttons */
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: left 0.2s, top 0.2s;
+    }
+
+    #yes {
+      background-color: #ff4d88;
+      color: white;
+    }
+
+    #no {
+      background-color: #ccc;
+      position: absolute;
+    }
+
+    /* Falling Hearts */
+    .heart {
+      position: fixed;
+      top: -10px;
+      color: #ff4d88;
+      font-size: 20px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Love Letter Screen */
+    #loveLetter {
+      display: none;
+      padding: 40px;
+    }
+
+    .letter-box {
+      background: white;
+      max-width: 400px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 0px 20px pink;
+    }
+
+    /* Hide YouTube player */
+    #player {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎵 Kal Ho Naa Ho – SRK Romantic Song -->
+  <iframe
+    id="player"
+    src="https://www.youtube.com/embed/g0eO74UmRBs?autoplay=1&loop=1&playlist=g0eO74UmRBs"
+    frameborder="0"
+    allow="autoplay"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Main Proposal -->
+  <div id="mainContent">
+    <div class="gif-container">
+      <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute Love GIF">
+    </div>
+
+    <h1>💘 Nikku, Will You Be My Valentine? 💘</h1>
+    <h2>From someone who smiles every time they think about you 💖</h2>
+
+    <button id="yes" onclick="yesClicked()">YES 💕</button>
+    <button id="no">NO 😜</button>
+  </div>
+
+  <!-- Love Letter Page -->
+  <div id="loveLetter">
+    <div class="letter-box">
+      <h1>💌 My Dearest Nikku 💌</h1>
+      <p>
+        From the moment you came into my life, everything started feeling brighter, warmer, and more beautiful.
+        Your smile is my favorite place, and your name is my favorite word.
+      </p>
+      <p>
+        I don’t know what the future holds, but I know one thing for sure —
+        I want all my best moments to have you in them. 💖
+      </p>
+      <h2 id="signature">Forever Yours ❤️</h2>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const signature = document.getElementById("signature");
+
+    // 🔥 Your name
+    const yourName = "Suku";
+
+    // Add name to love letter
+    signature.innerText = "Forever Yours ❤️ — " + yourName;
+
+    // Mouse + Touch detection
+    document.addEventListener("mousemove", detectClose);
+    document.addEventListener("touchstart", detectTouch);
+    document.addEventListener("touchmove", detectTouch);
+
+    function detectClose(e) {
+      const rect = noBtn.getBoundingClientRect();
+      const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
+      );
+
+      if (distance < 120) {
+        moveNo();
+      }
+    }
+
+    function detectTouch(e) {
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      const rect = noBtn.getBoundingClientRect();
+      const distance = Math.hypot(
+        touch.clientX - (rect.left + rect.width / 2),
+        touch.clientY - (rect.top + rect.height / 2)
+      );
+
+      if (distance < 120) {
+        moveNo();
+      }
+    }
+
+    function moveNo() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // YES Button Action
+    function yesClicked() {
+      document.getElementById("mainContent").style.display = "none";
+      document.getElementById("loveLetter").style.display = "block";
+      startHearts();
+    }
+
+    // Falling Hearts Generator
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
